@@ -52,7 +52,6 @@ public class FacturaDetalleServiceImplementation implements IFacturaDetalleServi
         } else {
             return null;
         } 
-
     }
     
    @Override
@@ -60,5 +59,4 @@ public class FacturaDetalleServiceImplementation implements IFacturaDetalleServi
     public void delete(Long id) {
         facturaDetalleRepository.deleteById(id);
     }
-
 }

@@ -55,9 +55,9 @@ public class FacturaDetalle {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModificacion;
     
- /*   @ManyToOne 
+    @ManyToOne 
     @JoinColumn(name="facturas_id")
-    private Factura factura;*/
+    private Factura factura;
     
     @ManyToOne 
     @JoinColumn(name="productos_id")

@@ -72,7 +72,7 @@ public class FacturaDetalleServiceImplementationTests {
         else{
             fail("No se encontro la información en la BD");
         }
-       
+        
     }
     
     @Test

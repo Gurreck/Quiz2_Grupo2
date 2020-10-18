@@ -1,5 +1,8 @@
 package org.una.tienda.facturacion.repositories;
 
-public class IFacturaRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.una.tienda.facturacion.entities.Factura;
+
+public interface IFacturaRepository extends JpaRepository<Factura, Long>{
 
 }

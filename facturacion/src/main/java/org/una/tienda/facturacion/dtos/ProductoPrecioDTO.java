@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.una.tienda.facturacion.entities.Producto;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,5 +18,5 @@ public class ProductoPrecioDTO {
     private Date fechaModificacion;
     private Date fechaRegistro;
     private Double precio_colones;
-    //private Producto producto;
+ //   private Producto producto;
 }
