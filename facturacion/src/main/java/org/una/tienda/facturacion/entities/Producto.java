@@ -57,11 +57,11 @@ public class Producto {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModificacion;
     
-  /*  @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto") 
+     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
     private List<ProductoExistencia> productosExistencias= new ArrayList<>();
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto") 
-    private List<ProductoPrecio> productosPrecios= new ArrayList<>();*/
+    private List<ProductoPrecio> productosPrecios= new ArrayList<>();
     
     private static final long serialVersionUID = 1L;
 

@@ -30,11 +30,11 @@ public class ProductoExistencia implements Serializable  {
     @Setter(AccessLevel.NONE)
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModificacion;
-    /*
+
     @ManyToOne
     @JoinColumn(name="ut_productos_id")
     private Producto producto;
-*/
+
     private static final long serialVersionUID = 1L;
 
     @PrePersist

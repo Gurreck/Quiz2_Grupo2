@@ -35,11 +35,11 @@ public class ProductoPrecio implements Serializable  {
     private Date fechaModificacion;
     @Column
     private Double precio_colones;
-    /*
+
     @ManyToOne
     @JoinColumn(name="ut_productos_id")
     private Producto producto;
-*/
+
     private static final long serialVersionUID = 1L;
 
     @PrePersist
