@@ -19,9 +19,9 @@ import org.una.tienda.facturacion.entities.Cliente;
 public class FacturaDTO
 {
     private Long id;
-    private int caja;
-    private double descuentoGeneral;
-    private boolean estado;
+    private Integer caja;
+    private Double descuentoGeneral;
+    private Boolean estado;
     private Date fechaModificacion;
     private Date fechaRegistro;
     private Cliente cliente;

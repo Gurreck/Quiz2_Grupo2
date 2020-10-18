@@ -62,7 +62,7 @@ public class ProductoServiceImplementationTests {
         Optional<ProductoDTO> productoEncontrado = productoService.findById(productoEjemplo.getId());
 
         if (productoEncontrado.isPresent()) {
-            if(productoEncontrado.get().getImpuesto().equals(productoEjemplo.getImpuesto())
+            if(productoEncontrado.get().getEstado() != false && productoEncontrado.get().getImpuesto().equals(productoEjemplo.getImpuesto())
                     && productoEncontrado.get().getDescripcion().equals(productoEjemplo.getDescripcion())){
                 assert(true);
             }

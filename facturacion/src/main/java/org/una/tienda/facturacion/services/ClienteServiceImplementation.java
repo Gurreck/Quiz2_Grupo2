@@ -40,9 +40,18 @@ public class ClienteServiceImplementation implements IClienteService {
     @Override
     @Transactional
     public ClienteDTO create(ClienteDTO ClienteDTO) {
+        
         Cliente cliente = MapperUtils.EntityFromDto(ClienteDTO, Cliente.class);
+        
+        if (cliente.getDireccion() != null && cliente.getTelefono() != null && cliente.getEmail() != null) {
+            
         cliente = clienteRepository.save(cliente);
         return MapperUtils.DtoFromEntity(cliente, ClienteDTO.class);
+        
+        }
+        else {
+            return null;
+        }
     }
 
     @Override
@@ -54,14 +63,16 @@ public class ClienteServiceImplementation implements IClienteService {
     @Override
     @Transactional
     public Optional<ClienteDTO> update(ClienteDTO clienteDTO, Long id) {
-        if (clienteRepository.findById(id).isPresent()) {
+        if (clienteRepository.findById(id).isPresent() && clienteRepository.findById(id).get().getEstado() != false
+                && clienteRepository.findById(id).get().getDireccion() != null && clienteRepository.findById(id).get().getTelefono() != null
+                    && clienteRepository.findById(id).get().getEmail() != null) {
+            
             Cliente cliente = MapperUtils.EntityFromDto(clienteDTO, Cliente.class);
             cliente = clienteRepository.save(cliente);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(cliente, ClienteDTO.class));
         } else {
             return null;
         } 
-
     }
 
     @Override

@@ -19,7 +19,7 @@ public class ProductoExistencia implements Serializable  {
     private Double cantidad;
 
     @Column
-    private boolean estado;
+    private Boolean estado;
 
     @Column(name = "fecha_registro", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)

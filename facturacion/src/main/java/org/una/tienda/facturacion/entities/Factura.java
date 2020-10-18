@@ -34,10 +34,10 @@ public class Factura implements Serializable {
     private String caja;
 
     @Column(name = "descuento_general")
-    private double descuentoGeneral;
+    private Double descuentoGeneral;
 
     @Column
-    private boolean estado;
+    private Boolean estado;
 
     @Column(name = "fecha_modificacion")
     @Setter(AccessLevel.NONE)

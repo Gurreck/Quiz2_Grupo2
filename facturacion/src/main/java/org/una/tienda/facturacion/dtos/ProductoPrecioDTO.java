@@ -14,7 +14,7 @@ public class ProductoPrecioDTO {
     private Long id;
     private Double descuento_maximo;
     private Double descuento_promocional;
-    private boolean estado;
+    private Boolean estado;
     private Date fechaModificacion;
     private Date fechaRegistro;
     private Double precio_colones;

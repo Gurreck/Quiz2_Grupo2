@@ -46,7 +46,7 @@ public class FacturaServiceImplementation implements IFacturaService{
     @Override
     @Transactional
     public Optional<FacturaDTO> update(FacturaDTO facturaDTO, Long id) {
-        if (facturaRepository.findById(id).isPresent()) {
+        if (facturaRepository.findById(id).isPresent() && facturaRepository.findById(id).get().getEstado() != false) {
             Factura factura = MapperUtils.EntityFromDto(facturaDTO, Factura.class);
             factura = facturaRepository.save(factura);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(factura, FacturaDTO.class));

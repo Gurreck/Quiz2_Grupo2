@@ -34,20 +34,26 @@ public class ClienteServiceImplementationTests {
     public void sePuedeCrearUnClienteCorrectamente() {
 
         clienteEjemplo = clienteService.create(clienteEjemplo);
+        
+        if (clienteEjemplo.getTelefono() != null && clienteEjemplo.getEmail() != null && clienteEjemplo.getDireccion() != null) 
+        {
+            Optional<ClienteDTO> clienteEncontrado = clienteService.findById(clienteEjemplo.getId());
 
-        Optional<ClienteDTO> clienteEncontrado = clienteService.findById(clienteEjemplo.getId());
+            if (clienteEncontrado.isPresent()) {
+                ClienteDTO cliente = clienteEncontrado.get();
+                assertEquals(clienteEjemplo.getId(), cliente.getId());
 
-        if (clienteEncontrado.isPresent()) {
-            ClienteDTO cliente = clienteEncontrado.get();
-            assertEquals(clienteEjemplo.getId(), cliente.getId());
-
-        } else {
-            fail("No se encontro la información en la BD");
+            } else {
+                fail("No se encontro la información en la BD");
+             }
+        }
+        else {
+            fail("No se pudo crear el cliente en la BD");
         }
     }
     
     @Test
-    public void sePuedeModificarUnaFacturaDetalleCorrectamente() {
+    public void sePuedeModificarUnClienteCorrectamente() {
         
         clienteEjemplo = clienteService.create(clienteEjemplo);
         
@@ -59,7 +65,7 @@ public class ClienteServiceImplementationTests {
         Optional<ClienteDTO> clienteEncontrado = clienteService.findById(clienteEjemplo.getId());
 
         if (clienteEncontrado.isPresent()) {
-            if(clienteEncontrado.get().getNombre().equals(clienteEjemplo.getNombre())
+            if(clienteEncontrado.get().getEstado() != false && clienteEncontrado.get().getNombre().equals(clienteEjemplo.getNombre())
                     && clienteEncontrado.get().getDireccion().equals(clienteEjemplo.getDireccion())){
                 assert(true);
             }
@@ -69,8 +75,7 @@ public class ClienteServiceImplementationTests {
         }
         else{
             fail("No se encontro la información en la BD");
-        }
-        
+        } 
     }
     
     @Test
@@ -93,30 +98,7 @@ public class ClienteServiceImplementationTests {
             fail("No se encontro la información en la BD");
         }
     }
-    
-    @Test
-    public void sePuedeCrearUnClienteConTelefonoCorreoDireccion() 
-    {
-        clienteEjemplo = clienteService.create(clienteEjemplo);
-        
-        if (clienteEjemplo.getTelefono() != null && clienteEjemplo.getEmail() != null && clienteEjemplo.getDireccion() != null) 
-        {
-            Optional<ClienteDTO> clienteEncontrado = clienteService.findById(clienteEjemplo.getId());
-
-            if (clienteEncontrado.isPresent()) {
-                ClienteDTO cliente = clienteEncontrado.get();
-                assertEquals(clienteEjemplo.getId(), cliente.getId());
-
-            } else {
-                fail("No se encontro la información en la BD");
-             }
-        }
-        else {
-            fail("No se pudo crear el cliente en la BD");
-        }
-        
-    }
-    
+      
     @AfterEach
     public void tearDown() {
         if (clienteEjemplo != null) {

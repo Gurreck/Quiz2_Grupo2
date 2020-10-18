@@ -39,7 +39,7 @@ public class FacturaDetalleServiceImplementationTests {
 
         Optional<FacturaDetalleDTO> facturaDetalleEncontrado = facturaDetalleService.findById(facturaDetalleEjemplo.getId());
 
-        if (facturaDetalleEncontrado.isPresent()) {
+        if (facturaDetalleEncontrado.isPresent() && facturaDetalleEncontrado.get().getCantidad() != 0) {
             FacturaDetalleDTO facturaDetalle = facturaDetalleEncontrado.get();
             assertEquals(facturaDetalleEjemplo.getId(), facturaDetalle.getId());
 
@@ -61,7 +61,7 @@ public class FacturaDetalleServiceImplementationTests {
         Optional<FacturaDetalleDTO> facturaDetalleEncontrado = facturaDetalleService.findById(facturaDetalleEjemplo.getId());
 
         if (facturaDetalleEncontrado.isPresent()) {
-            if(facturaDetalleEncontrado.get().getDescuento_final().equals(facturaDetalleEjemplo.getDescuento_final())
+            if(facturaDetalleEncontrado.get().getEstado() != false && facturaDetalleEncontrado.get().getDescuento_final().equals(facturaDetalleEjemplo.getDescuento_final())
                     && facturaDetalleEncontrado.get().getCantidad().equals(facturaDetalleEjemplo.getCantidad())){
                 assert(true);
             }
@@ -72,7 +72,6 @@ public class FacturaDetalleServiceImplementationTests {
         else{
             fail("No se encontro la información en la BD");
         }
-        
     }
     
     @Test

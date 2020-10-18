@@ -55,7 +55,7 @@ public class ProductoExistenciaServiceImplementationTests {
         Optional<ProductoExistenciaDTO> productoEncontrado = productoExistenciaService.findById(productoExistenciaEjemplo.getId());
 
         if (productoEncontrado.isPresent()) {
-            if(productoEncontrado.get().getCantidad().equals(productoExistenciaEjemplo.getCantidad()))  {
+            if(productoEncontrado.get().getEstado() != false && productoEncontrado.get().getCantidad().equals(productoExistenciaEjemplo.getCantidad()))  {
                 assert(true);
             }
             else{

@@ -47,7 +47,7 @@ public class ProductoServiceImplementation implements IProductoService{
     @Override
     @Transactional
     public Optional<ProductoDTO> update(ProductoDTO productoDTO, Long id) {
-        if (productoRepository.findById(id).isPresent()) {
+        if (productoRepository.findById(id).isPresent() && productoRepository.findById(id).get().getEstado() != false) {
             Producto producto = MapperUtils.EntityFromDto(productoDTO, Producto.class);
             producto = productoRepository.save(producto);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(producto, ProductoDTO.class));

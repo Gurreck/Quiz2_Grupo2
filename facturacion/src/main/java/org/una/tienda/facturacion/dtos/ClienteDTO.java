@@ -20,7 +20,7 @@ public class ClienteDTO
     private Long id;
     private String direccion;
     private String email;
-    private boolean estado;
+    private Boolean estado;
     private Date fechaModificacion;
     private Date fechaRegistro;
     private String nombre;

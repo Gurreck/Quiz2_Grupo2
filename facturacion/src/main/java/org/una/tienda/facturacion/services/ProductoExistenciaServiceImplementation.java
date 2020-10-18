@@ -42,7 +42,7 @@ public class ProductoExistenciaServiceImplementation implements IProductoExisten
     @Override
     @Transactional
     public Optional<ProductoExistenciaDTO> update(ProductoExistenciaDTO productoExistenciaDTO, Long id) {
-        if (productoExistenciaRepository.findById(id).isPresent()) {
+        if (productoExistenciaRepository.findById(id).isPresent() && productoExistenciaRepository.findById(id).get().getEstado() != false) {
             ProductoExistencia producto = MapperUtils.EntityFromDto(productoExistenciaDTO, ProductoExistencia.class);
             producto = productoExistenciaRepository.save(producto);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(producto, ProductoExistenciaDTO.class));

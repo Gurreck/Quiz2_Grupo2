@@ -47,7 +47,7 @@ public class Cliente implements Serializable {
     private String email;
 
     @Column
-    private boolean estado;
+    private Boolean estado;
 
     @Column(name = "fecha_modificacion")
     @Setter(AccessLevel.NONE)

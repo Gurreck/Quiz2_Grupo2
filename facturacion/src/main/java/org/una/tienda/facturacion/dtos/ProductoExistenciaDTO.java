@@ -14,7 +14,7 @@ import org.una.tienda.facturacion.entities.Producto;
 public class ProductoExistenciaDTO {
     private Long id;
     private Double cantidad;
-    private boolean estado;
+    private Boolean estado;
     private Date fechaModificacion;
     private Date fechaRegistro;
     private Producto producto;

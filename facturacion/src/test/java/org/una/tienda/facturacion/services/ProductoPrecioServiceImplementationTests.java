@@ -60,7 +60,7 @@ public class ProductoPrecioServiceImplementationTests {
         Optional<ProductoPrecioDTO> productoEncontrado = productoPrecioService.findById(productoPrecioEjemplo.getId());
 
         if (productoEncontrado.isPresent()) {
-            if(productoEncontrado.get().getDescuento_maximo().equals(productoPrecioEjemplo.getDescuento_maximo())
+            if(productoEncontrado.get().getEstado() != false && productoEncontrado.get().getDescuento_maximo().equals(productoPrecioEjemplo.getDescuento_maximo())
                     && productoEncontrado.get().getDescuento_promocional().equals(productoPrecioEjemplo.getDescuento_promocional())
                         && productoEncontrado.get().getPrecio_colones().equals(productoPrecioEjemplo.getPrecio_colones())){
                 assert(true);

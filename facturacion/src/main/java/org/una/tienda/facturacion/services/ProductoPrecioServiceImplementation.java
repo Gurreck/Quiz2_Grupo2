@@ -42,7 +42,7 @@ public class ProductoPrecioServiceImplementation implements IProductoPrecioServi
     @Override
     @Transactional
     public Optional<ProductoPrecioDTO> update(ProductoPrecioDTO productoDTO, Long id) {
-        if (productoPrecioRepository.findById(id).isPresent()) {
+        if (productoPrecioRepository.findById(id).isPresent() && productoPrecioRepository.findById(id).get().getEstado() != false) {
             ProductoPrecio producto = MapperUtils.EntityFromDto(productoDTO, ProductoPrecio.class);
             producto = productoPrecioRepository.save(producto);
             return Optional.ofNullable(MapperUtils.DtoFromEntity(producto, ProductoPrecioDTO.class));

@@ -42,10 +42,10 @@ public class Producto {
     private String descripcion;
     
     @Column
-    private boolean estado;
+    private Boolean estado;
     
     @Column
-    private double impuesto;
+    private Double impuesto;
       
     @Column(name = "fecha_registro", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)

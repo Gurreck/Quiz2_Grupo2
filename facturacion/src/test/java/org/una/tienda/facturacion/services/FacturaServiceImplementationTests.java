@@ -8,7 +8,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.una.tienda.facturacion.dtos.ClienteDTO;
 import org.una.tienda.facturacion.dtos.FacturaDTO;
+import org.una.tienda.facturacion.entities.Cliente;
+import org.una.tienda.facturacion.utils.MapperUtils;
 
 /**
  *
@@ -21,13 +24,22 @@ public class FacturaServiceImplementationTests {
     private IFacturaService facturaService;
 
     FacturaDTO facturaEjemplo;
+    ClienteDTO clienteEjemplo;
 
     @BeforeEach
     public void setup() {
+        
+        clienteEjemplo = new ClienteDTO() ;
+        clienteEjemplo.setNombre("Juan Pablo");
+        clienteEjemplo.setTelefono("4643213");
+        clienteEjemplo.setEmail("juan.com");
+        clienteEjemplo.setDireccion("SJ");
+        
         facturaEjemplo = new FacturaDTO() {
             {
                  setDescuentoGeneral(5000.0);
                  setCaja(5);
+                // setCliente(MapperUtils.EntityFromDto(clienteEjemplo, Cliente.class));
             }
         };
     }
@@ -59,9 +71,9 @@ public class FacturaServiceImplementationTests {
         facturaService.update(facturaEjemplo, facturaEjemplo.getId());
 
         Optional<FacturaDTO> facturaEncontrado = facturaService.findById(facturaEjemplo.getId());
-
+              
         if (facturaEncontrado.isPresent()) {
-            if(facturaEncontrado.get().getDescuentoGeneral() == facturaEjemplo.getDescuentoGeneral()
+            if(facturaEncontrado.get().getEstado() != false && facturaEncontrado.get().getDescuentoGeneral().equals(facturaEjemplo.getDescuentoGeneral())
                     && facturaEncontrado.get().getCaja() == facturaEjemplo.getCaja()){
                 assert(true);
             }
