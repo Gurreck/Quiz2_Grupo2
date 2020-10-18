@@ -52,22 +52,18 @@ public class ProductoServiceImplementationTests {
     public void sePuedeModificarUnProductoCorrectamente() {
         
         productoEjemplo = productoService.create(productoEjemplo);
-        ProductoDTO productoEjemplo2;
-        productoEjemplo2 = new ProductoDTO() {
-            {
-                setId(productoEjemplo.getId());
-                setDescripcion("Producto De Ejemplo Actualizado");
-                setImpuesto(0.25);
-            }
-        };
         
-        productoService.update(productoEjemplo2, productoEjemplo.getId());
+        productoEjemplo.setDescripcion("Producto De Ejemplo Actualizado");
+        productoEjemplo.setImpuesto(0.25);
+ 
+        
+        productoService.update(productoEjemplo, productoEjemplo.getId());
 
         Optional<ProductoDTO> productoEncontrado = productoService.findById(productoEjemplo.getId());
 
         if (productoEncontrado.isPresent()) {
-            if(productoEncontrado.get().getImpuesto().equals(productoEjemplo2.getImpuesto())
-                    && productoEncontrado.get().getDescripcion().equals(productoEjemplo2.getDescripcion())){
+            if(productoEncontrado.get().getImpuesto().equals(productoEjemplo.getImpuesto())
+                    && productoEncontrado.get().getDescripcion().equals(productoEjemplo.getDescripcion())){
                 assert(true);
             }
             else{
@@ -80,10 +76,33 @@ public class ProductoServiceImplementationTests {
        
     }
     
+    @Test
+    public void sePuedeEliminarUnaFacturaDetalleCorrectamente() {
+ 
+        productoEjemplo = productoService.create(productoEjemplo);
+
+        Optional<ProductoDTO> facturaDetalleEncontrado = productoService.findById(productoEjemplo.getId());
+
+        if (facturaDetalleEncontrado.isPresent()) {
+            
+            productoService.delete(facturaDetalleEncontrado.get().getId());
+            if(productoService.findById(facturaDetalleEncontrado.get().getId()) == null){
+                assert(true);
+            }
+            else{
+                fail("No se elimino la información en la BD");
+            }
+        } else {
+            fail("No se encontro la información en la BD");
+        }
+    }
+    
     @AfterEach
     public void tearDown() {
         if (productoEjemplo != null) {
-            productoService.delete(productoEjemplo.getId());
+            if(productoService.findById(productoEjemplo.getId()) != null){
+                productoService.delete(productoEjemplo.getId());
+            }
             productoEjemplo = null;
         }
 

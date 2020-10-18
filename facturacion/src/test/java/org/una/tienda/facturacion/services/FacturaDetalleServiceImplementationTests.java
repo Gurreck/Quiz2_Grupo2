@@ -52,22 +52,17 @@ public class FacturaDetalleServiceImplementationTests {
     public void sePuedeModificarUnaFacturaDetalleCorrectamente() {
         
         facturaDetalleEjemplo = facturaDetalleService.create(facturaDetalleEjemplo);
-        FacturaDetalleDTO facturaDetalleEjemplo2;
-        facturaDetalleEjemplo2 = new FacturaDetalleDTO() {
-            {
-                setId(facturaDetalleEjemplo.getId());
-                setDescuento_final(1000.0);
-                setCantidad(5.0);
-            }
-        };
         
-        facturaDetalleService.update(facturaDetalleEjemplo2, facturaDetalleEjemplo.getId());
+        facturaDetalleEjemplo.setDescuento_final(1000.0);
+        facturaDetalleEjemplo.setCantidad(5.0);
+   
+        facturaDetalleService.update(facturaDetalleEjemplo, facturaDetalleEjemplo.getId());
 
         Optional<FacturaDetalleDTO> facturaDetalleEncontrado = facturaDetalleService.findById(facturaDetalleEjemplo.getId());
 
         if (facturaDetalleEncontrado.isPresent()) {
-            if(facturaDetalleEncontrado.get().getDescuento_final().equals(facturaDetalleEjemplo2.getDescuento_final())
-                    && facturaDetalleEncontrado.get().getCantidad().equals(facturaDetalleEjemplo2.getCantidad())){
+            if(facturaDetalleEncontrado.get().getDescuento_final().equals(facturaDetalleEjemplo.getDescuento_final())
+                    && facturaDetalleEncontrado.get().getCantidad().equals(facturaDetalleEjemplo.getCantidad())){
                 assert(true);
             }
             else{
@@ -80,10 +75,34 @@ public class FacturaDetalleServiceImplementationTests {
        
     }
     
+    @Test
+    public void sePuedeEliminarUnaFacturaDetalleCorrectamente() {
+ 
+        facturaDetalleEjemplo = facturaDetalleService.create(facturaDetalleEjemplo);
+
+        Optional<FacturaDetalleDTO> facturaDetalleEncontrado = facturaDetalleService.findById(facturaDetalleEjemplo.getId());
+
+        if (facturaDetalleEncontrado.isPresent()) {
+            
+            facturaDetalleService.delete(facturaDetalleEncontrado.get().getId());
+            if(facturaDetalleService.findById(facturaDetalleEncontrado.get().getId()) == null){
+                assert(true);
+            }
+            else{
+                fail("No se elimino la información en la BD");
+            }
+        } else {
+            fail("No se encontro la información en la BD");
+        }
+    }
+    
     @AfterEach
     public void tearDown() {
         if (facturaDetalleEjemplo != null) {
-            facturaDetalleService.delete(facturaDetalleEjemplo.getId());
+            if(facturaDetalleService.findById(facturaDetalleEjemplo.getId()) != null){
+                facturaDetalleService.delete(facturaDetalleEjemplo.getId());
+            }
+            
             facturaDetalleEjemplo = null;
         }
 
