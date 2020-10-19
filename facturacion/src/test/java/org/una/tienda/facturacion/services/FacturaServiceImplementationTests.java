@@ -1,15 +1,9 @@
 package org.una.tienda.facturacion.services;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.una.tienda.facturacion.dtos.ClienteDTO;
-import org.una.tienda.facturacion.dtos.FacturaDTO;
-import org.una.tienda.facturacion.entities.Cliente;
-import org.una.tienda.facturacion.exceptions.ProductoConDescuentoMayorAlPermitidoException;
-import org.una.tienda.facturacion.utils.MapperUtils;
 import org.una.tienda.facturacion.dtos.*;
 import org.una.tienda.facturacion.entities.Factura;
 import org.una.tienda.facturacion.entities.Producto;
@@ -27,6 +21,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @SpringBootTest
 public class FacturaServiceImplementationTests {
     
+    @Autowired
+    private IClienteService clienteService;
+
     @Autowired
     private IFacturaService facturaService;
 
@@ -56,18 +53,19 @@ public class FacturaServiceImplementationTests {
     @BeforeEach
     public void setup() {
         
-        clienteEjemplo = new ClienteDTO() ;
-        clienteEjemplo.setNombre("Juan Pablo");
-        clienteEjemplo.setTelefono("4643213");
-        clienteEjemplo.setEmail("juan.com");
-        clienteEjemplo.setDireccion("SJ");
+        clienteEjemplo = new ClienteDTO() {
+            {
+                setDireccion("Direccion de ejemplo");
+                setNombre("Cliente de ejemplo");
+                setEmail("hola.com");
+                setTelefono("869546");
+            }
+        };
         
-
         facturaEjemplo = new FacturaDTO() {
             {
                  setDescuentoGeneral(5000.0);
                  setCaja(5);
-                // setCliente(MapperUtils.EntityFromDto(clienteEjemplo, Cliente.class));
             }
         };
         facturaDetalleEjemplo = new FacturaDetalleDTO() {
@@ -103,10 +101,10 @@ public class FacturaServiceImplementationTests {
  
         facturaEjemplo = facturaService.create(facturaEjemplo);
 
-        Optional<FacturaDTO> facturaEncontrado2 = facturaService.findById(facturaEjemplo.getId());
+        Optional<FacturaDTO> facturaEncontrado = facturaService.findById(facturaEjemplo.getId());
 
-        if (facturaEncontrado2.isPresent()) {
-            FacturaDTO factura = facturaEncontrado2.get();
+        if (facturaEncontrado.isPresent()) {
+            FacturaDTO factura = facturaEncontrado.get();
             assertEquals(facturaEjemplo.getId(), factura.getId());
 
         } else {
@@ -116,6 +114,10 @@ public class FacturaServiceImplementationTests {
 
    @Test
     public void sePuedeModificarUnaFacturaCorrectamente() {
+        
+        clienteEjemplo = clienteService.create(clienteEjemplo);
+
+        facturaEjemplo.setCliente(clienteEjemplo);
         
         facturaEjemplo = facturaService.create(facturaEjemplo);
         
@@ -128,7 +130,8 @@ public class FacturaServiceImplementationTests {
               
         if (facturaEncontrado.isPresent()) {
             if(facturaEncontrado.get().getEstado() != false && facturaEncontrado.get().getDescuentoGeneral().equals(facturaEjemplo.getDescuentoGeneral())
-                    && facturaEncontrado.get().getCaja() == facturaEjemplo.getCaja()){
+                    && facturaEncontrado.get().getCaja().equals(facturaEjemplo.getCaja()) && facturaEncontrado.get().getCliente().getEstado() != false){
+                
                 assert(true);
             }
             else{
@@ -137,9 +140,10 @@ public class FacturaServiceImplementationTests {
         }
         else{
             fail("No se encontro la información en la BD");
-        }
+        } 
         
     }
+    
     
     @Test
     public void sePuedeEliminarUnaFacturaCorrectamente() {
@@ -163,7 +167,7 @@ public class FacturaServiceImplementationTests {
     }
 
     @Test
-    public void sePuedeCrearUnaFacturaCorrectamenteSiLaCantidadNoEsCero() throws ProductoConDescuentoMayorAlPermitidoException {
+    public void sePuedeCrearUnaFacturaCorrectamenteSiLaCantidadNoEsCero() {
 
         facturaEjemplo = facturaService.create(facturaEjemplo);
 
@@ -185,7 +189,7 @@ public class FacturaServiceImplementationTests {
     }
 
     @Test
-    public void sePuedeCrearUnaFacturaCorrectamenteSiElPrecioNoEsCero() throws ProductoConDescuentoMayorAlPermitidoException {
+    public void sePuedeCrearUnaFacturaCorrectamenteSiElPrecioNoEsCero() {
 
         facturaEjemplo = facturaService.create(facturaEjemplo);
 
@@ -215,7 +219,7 @@ public class FacturaServiceImplementationTests {
     }
 
     @Test
-    public void sePuedeCrearUnaFacturaCorrectamenteSiElInventarioNoEsCero() throws ProductoConDescuentoMayorAlPermitidoException {
+    public void sePuedeCrearUnaFacturaCorrectamenteSiElInventarioNoEsCero() {
 
         facturaEjemplo = facturaService.create(facturaEjemplo);
 

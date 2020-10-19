@@ -12,7 +12,7 @@ public interface IFacturaDetalleService {
     
     public Optional<FacturaDetalleDTO> findById(Long id);
     
-    public FacturaDetalleDTO create(FacturaDetalleDTO facturaDetalleDTO) throws ProductoConDescuentoMayorAlPermitidoException;
+    public FacturaDetalleDTO create(FacturaDetalleDTO facturaDetalleDTO);
     
     public Optional<FacturaDetalleDTO> update(FacturaDetalleDTO facturaDetalleDTO, Long id);
     

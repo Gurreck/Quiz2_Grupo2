@@ -16,7 +16,6 @@ public class ClienteServiceImplementationTests {
     private IClienteService clienteService;
 
     ClienteDTO clienteEjemplo;
-    Optional<ClienteDTO> clienteEjemplo2;
     
     @BeforeEach
     public void setup() {
