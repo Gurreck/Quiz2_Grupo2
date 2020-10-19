@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.una.tienda.facturacion.entities.Factura;
-import org.una.tienda.facturacion.entities.Producto;
 
 /**
  *
@@ -24,6 +22,6 @@ public class FacturaDetalleDTO {
     private Boolean estado; 
     private Date fechaRegistro; 
     private Date fechaModificacion; 
-    private Factura factura; 
-    private Producto producto;
+    private FacturaDTO factura; 
+    private ProductoDTO producto;
 }

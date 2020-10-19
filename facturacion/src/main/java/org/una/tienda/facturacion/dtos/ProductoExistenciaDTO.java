@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.una.tienda.facturacion.entities.Producto;
 
 @Data
 @AllArgsConstructor
@@ -17,5 +16,5 @@ public class ProductoExistenciaDTO {
     private Boolean estado;
     private Date fechaModificacion;
     private Date fechaRegistro;
-    private Producto producto;
+    private ProductoDTO producto;
 }
