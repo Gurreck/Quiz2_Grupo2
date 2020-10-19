@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.una.tienda.facturacion.dtos.FacturaDetalleDTO;
+import org.una.tienda.facturacion.dtos.ProductoPrecioDTO;
 import org.una.tienda.facturacion.entities.FacturaDetalle;
+import org.una.tienda.facturacion.exceptions.ProductoConDescuentoMayorAlPermitidoException;
 import org.una.tienda.facturacion.repositories.IFacturaDetalleRepository;
 import org.una.tienda.facturacion.utils.MapperUtils;
 
@@ -18,6 +20,9 @@ public class FacturaDetalleServiceImplementation implements IFacturaDetalleServi
     
     @Autowired
     private IFacturaDetalleRepository facturaDetalleRepository;
+    
+    @Autowired
+    private IProductoPrecioService productoPrecioService;
     
     private Optional<FacturaDetalleDTO> oneToDto(Optional<FacturaDetalle> one) {
         if (one.isPresent()) {
@@ -36,11 +41,22 @@ public class FacturaDetalleServiceImplementation implements IFacturaDetalleServi
 
     @Override
     @Transactional
-    public FacturaDetalleDTO create(FacturaDetalleDTO FacturaDetalleDTO) {
-        FacturaDetalle facturaDetalle = MapperUtils.EntityFromDto(FacturaDetalleDTO, FacturaDetalle.class);
-        facturaDetalle = facturaDetalleRepository.save(facturaDetalle);
-        return MapperUtils.DtoFromEntity(facturaDetalle, FacturaDetalleDTO.class);
+    public FacturaDetalleDTO create(FacturaDetalleDTO facturaDetalle) throws ProductoConDescuentoMayorAlPermitidoException {
+
+        Optional<ProductoPrecioDTO> productoPrecio = productoPrecioService.findById(facturaDetalle.getProducto().getId());
+
+        if (productoPrecio.isEmpty()) {
+            //TODO:implementar verificar existencia de asignacion de precios
+            return null;
+        }
+        if (facturaDetalle.getDescuento_final() > productoPrecio.get().getDescuento_maximo()) {
+            throw new ProductoConDescuentoMayorAlPermitidoException("Se intenta facturar un producto con un descuento mayor al permitido");
+        }
+        FacturaDetalle usuario = MapperUtils.EntityFromDto(facturaDetalle, FacturaDetalle.class);
+        usuario = facturaDetalleRepository.save(usuario);
+        return MapperUtils.DtoFromEntity(usuario, FacturaDetalleDTO.class);
     }
+
 
     @Override
     @Transactional
